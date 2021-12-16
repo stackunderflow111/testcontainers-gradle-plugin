@@ -1,0 +1,67 @@
+import nu.studer.gradle.jooq.JooqGenerate
+import org.jooq.meta.jaxb.Configuration
+
+plugins {
+    id("github.stackunderflow111.testcontainers")
+    id("nu.studer.jooq") version "6.0.1"
+}
+
+group = "github.stackunderflow111"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    jooqGenerator("org.postgresql:postgresql:42.3.1")
+    testcontainersRuntime("org.testcontainers:postgresql:1.16.2")
+    testcontainersRuntime("org.postgresql:postgresql:42.3.1")
+}
+
+// jooq configuration
+jooq {
+    configurations {
+        create("main") {  // name of the jOOQ configuration
+            jooqConfiguration.apply {
+                jdbc.apply {
+                    driver = "org.postgresql.Driver"
+                }
+                generator.apply {
+                    name = "org.jooq.codegen.DefaultGenerator"
+                    database.apply {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        inputSchema = "public"
+                    }
+                }
+            }
+        }
+    }
+}
+
+testcontainers {
+    imageName.set("postgres:13")
+    containerClass.set("org.testcontainers.containers.PostgreSQLContainer")
+    configureContainer {
+        withUsername("stackunderflow")
+    }
+    task = tasks.named<JooqGenerate>("generateJooq")
+    flywayMigrateStep {
+        configureFlyway {
+            locations("filesystem:src/test/resources/db/migration")
+        }
+    }
+    customActionStep {
+        run { container ->
+            this as JooqGenerate
+            val jooqConfigurationField = JooqGenerate::class.java.getDeclaredField("jooqConfiguration")
+            jooqConfigurationField.isAccessible = true
+            val jooqConfiguration = jooqConfigurationField.get(this) as Configuration
+            jooqConfiguration.jdbc.apply {
+                url = container.jdbcUrl
+                user = container.username
+                password = container.password
+            }
+        }
+    }
+}

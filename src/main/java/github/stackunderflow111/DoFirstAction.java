@@ -18,6 +18,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.utility.DockerImageName;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ import java.util.stream.Collectors;
 /**
  * The action to run in the doFirst block when the configured task starts.
  *
- * The action starts a docker container, and then runs a list of {@link Step}s with this container.
+ * It starts a docker container, and then runs a list of {@link Step}s with this container.
  */
 public class DoFirstAction implements Action<Task> {
     private final TestcontainersExtension extension;
@@ -65,6 +66,8 @@ public class DoFirstAction implements Action<Task> {
             } else if (config instanceof CustomActionConfig) {
                 CustomActionStep customActionStep = new CustomActionStep((CustomActionConfig) config, task);
                 postStartSteps.add(customActionStep);
+            } else {
+                throw new GradleException("unexpected config type: " + config.getClass());
             }
         }
         logger.info("Steps to execute: {}", postStartSteps
@@ -77,14 +80,14 @@ public class DoFirstAction implements Action<Task> {
             logger.info("Executing step: {}", step.getClass().getSimpleName());
             step.execute(container);
         }
-        logger.info("Steps executed successfully, let's hand over the job to Jooq!");
+        logger.info("Steps executed successfully!");
     }
 
     private JdbcDatabaseContainer<?> startContainer(String imageName,
                                                     String containerClass,
                                                     ClassLoader classLoader,
                                                     Action<? super JdbcDatabaseContainer<?>> configureContainerAction) {
-        logger.info("Starting a container with image name '{}'", imageName);
+        logger.info("Starting a container with image '{}'", imageName);
 
         Class<JdbcDatabaseContainer<?>> clazz;
         try {
@@ -99,8 +102,8 @@ public class DoFirstAction implements Action<Task> {
             Constructor<JdbcDatabaseContainer<?>> constructor = clazz.getConstructor(DockerImageName.class);
             container = constructor.newInstance(DockerImageName.parse(imageName));
         } catch (Exception e) {
-            throw new GradleException(
-                    "Internal error, could not create a new instance of class " + clazz.getSimpleName(),
+            throw new InvalidUserDataException(
+                    "Could not create a new instance of class " + clazz.getSimpleName() + " with image " + imageName,
                     e
             );
         }

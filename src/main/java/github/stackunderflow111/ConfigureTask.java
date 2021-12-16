@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Configure the task defined in the "testcontainers" extension to run {@link DoFirstAction} first
+ * Configure the task defined in the "testcontainers" extension to run {@link DoFirstAction} in its doFirst block
  */
 public class ConfigureTask implements Action<Project> {
     private final TestcontainersExtension extension;
@@ -47,7 +47,7 @@ public class ConfigureTask implements Action<Project> {
             classPaths.addAll(JavaProjectUtils.getClassPathsFromJavaProject(project));
         }
         classPaths.addAll(ConfigurationUtils.getClassPathsFromConfiguration(project));
-        logger.info("ClassPaths for testcontainers and Jooq: {}", classPaths);
+        logger.info("ClassPaths for testcontainers: {}", classPaths);
 
         return new URLClassLoader(
                 classPaths.toArray(new URL[0]),
