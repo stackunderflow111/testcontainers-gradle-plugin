@@ -40,11 +40,11 @@ public class DoFirstAction implements Action<Task> {
    */
   @Override
   public void execute(@NotNull Task task) {
-    List<Step> postStartSteps = configurePostStartSteps(extension.getConfigs());
     Project project = task.getProject();
     ClassLoader classLoader = initClassLoader(project);
     JdbcDatabaseContainer<?> container = startContainer(extension, project, classLoader);
     ExecutionContext executionContext = new ExecutionContext(container, task, classLoader);
+    List<Step> postStartSteps = configurePostStartSteps(extension.getConfigs());
     // run steps
     for (Step step : postStartSteps) {
       logger.info("Executing step: {}", step.getClass().getSimpleName());

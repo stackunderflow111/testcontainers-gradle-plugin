@@ -11,7 +11,7 @@ import org.jooq.meta.jaxb.Configuration
 
 plugins {
     // include my plugin
-    id("github.stackunderflow111.testcontainers") version "<latest version>"
+    id("github.stackunderflow111.testcontainers") version "1.0"
     // include the jooq gradle plugin
     id("nu.studer.jooq") version "6.0.1"
 }
@@ -26,7 +26,7 @@ repositories {
 dependencies {
     jooqGenerator("org.postgresql:postgresql:42.3.1")
     // the testcontainersRuntime configuration block is used to configure testcontainers dependencies
-    // here testcontainers need the postgres module , and flyway needs the postgres connector
+    // here testcontainers need the postgres module, and flyway needs the postgres connector
     testcontainersRuntime("org.testcontainers:postgresql:1.16.2")
     testcontainersRuntime("org.postgresql:postgresql:42.3.1")
 }
@@ -54,16 +54,17 @@ jooq {
 // testcontainers configuration block
 testcontainers {
     // docker image name, required
-    imageName.set("postgres:13")
+    imageName.set("postgres:13-alpine")
     // testcontainers class used to create the container, required
     containerClass.set("org.testcontainers.containers.PostgreSQLContainer")
     // configure the container before it starts, not required (default works fine)
     configureContainer {
         withUsername("stackunderflow")
     }
-    // the task to configure, required
+    // the task to configure, required. This plugin will start a container and then run the
+    // configured "steps" (like the flywayMigrateStep and customStep below) in the task's doFirst block
     task = tasks.named<JooqGenerate>("generateJooq")
-    // add a flyway migrate step to the doFirst block of the "generateJooq" task
+    // add a flyway migrate step after the container starts
     flywayMigrateStep {
         // configure flyway before migration runs
         configureFlyway {
@@ -71,11 +72,10 @@ testcontainers {
             locations("filesystem:src/main/resources/db/migration")
         }
     }
-    // add a custom step (after the previously configured flyway step) to the doFirst block of the "generateJooq" task
+    // add a custom step (after the previously configured flyway step)
     customStep {
-        // the action to run. "this" is the "ExecutionContext" object, which containers the task and the container
+        // the action to run. "this" is the "ExecutionContext" object, which includes the task and the container
         run {
-            task as JooqGenerate
             // The jooq plugin doesn't allow modification to the "jooqConfiguration" field, so we have to use reflection
             val jooqConfigurationField = JooqGenerate::class.java.getDeclaredField("jooqConfiguration")
             jooqConfigurationField.isAccessible = true
