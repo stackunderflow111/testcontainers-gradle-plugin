@@ -51,12 +51,12 @@ testcontainers {
             locations("filesystem:src/test/resources/db/migration")
         }
     }
-    customActionStep {
-        run { container ->
-            this as JooqGenerate
+    customStep {
+        run {
+            task as JooqGenerate
             val jooqConfigurationField = JooqGenerate::class.java.getDeclaredField("jooqConfiguration")
             jooqConfigurationField.isAccessible = true
-            val jooqConfiguration = jooqConfigurationField.get(this) as Configuration
+            val jooqConfiguration = jooqConfigurationField.get(task) as Configuration
             jooqConfiguration.jdbc.apply {
                 url = container.jdbcUrl
                 user = container.username

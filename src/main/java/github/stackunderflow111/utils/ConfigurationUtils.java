@@ -16,7 +16,7 @@ public class ConfigurationUtils {
 
   public static void createRuntimeConfiguration(Project project) {
     Configuration runtimeConfiguration = project.getConfigurations().create(CONFIGURATION_NAME);
-    runtimeConfiguration.setDescription("The classpath used to prepare the jOOQ code generator.");
+    runtimeConfiguration.setDescription("The classpath used to run testcontainers.");
   }
 
   public static Set<URL> getClassPathsFromConfiguration(Project project) {

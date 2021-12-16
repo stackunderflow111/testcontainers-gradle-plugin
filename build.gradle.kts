@@ -42,13 +42,11 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
-//spotless {
-//    java {
-////        println(project.rootDir)
-//        target("src/*/java/**/*.java")
-//        googleJavaFormat()
-//    }
-//    kotlinGradle {
-//        ktlint()
-//    }
-//}
+spotless {
+    java {
+        googleJavaFormat()
+    }
+    kotlinGradle {
+        ktlint()
+    }
+}

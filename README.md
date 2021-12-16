@@ -72,14 +72,14 @@ testcontainers {
         }
     }
     // add a custom step (after the previously configured flyway step) to the doFirst block of the "generateJooq" task
-    customActionStep {
-        // the action to run. "this" is the "generateJooq" task, and "container" is the started container
-        run { container ->
-            this as JooqGenerate
+    customStep {
+        // the action to run. "this" is the "ExecutionContext" object, which containers the task and the container
+        run {
+            task as JooqGenerate
             // The jooq plugin doesn't allow modification to the "jooqConfiguration" field, so we have to use reflection
             val jooqConfigurationField = JooqGenerate::class.java.getDeclaredField("jooqConfiguration")
             jooqConfigurationField.isAccessible = true
-            val jooqConfiguration = jooqConfigurationField.get(this) as Configuration
+            val jooqConfiguration = jooqConfigurationField.get(task) as Configuration
             jooqConfiguration.jdbc.apply {
                 url = container.jdbcUrl
                 user = container.username
