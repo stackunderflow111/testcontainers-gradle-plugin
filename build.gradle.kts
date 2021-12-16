@@ -3,6 +3,7 @@ plugins {
     id("java-gradle-plugin")
     id("maven-publish")
     id("com.gradle.plugin-publish") version "0.16.0"
+    id("com.diffplug.spotless") version "6.0.4"
 }
 
 group = "github.stackunderflow111"
@@ -40,3 +41,14 @@ pluginBundle {
 tasks.named<Test>("test") {
     useJUnitPlatform()
 }
+
+//spotless {
+//    java {
+////        println(project.rootDir)
+//        target("src/*/java/**/*.java")
+//        googleJavaFormat()
+//    }
+//    kotlinGradle {
+//        ktlint()
+//    }
+//}

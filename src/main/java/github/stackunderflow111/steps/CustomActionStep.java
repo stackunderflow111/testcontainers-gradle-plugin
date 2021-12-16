@@ -1,23 +1,19 @@
 package github.stackunderflow111.steps;
 
-import github.stackunderflow111.CustomAction;
+import github.stackunderflow111.ExecutionContext;
 import github.stackunderflow111.extenstion.CustomActionConfig;
-import org.gradle.api.Task;
-import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.gradle.api.Action;
 
 public class CustomActionStep implements Step {
-    private final CustomActionConfig customActionConfig;
+  private final CustomActionConfig customActionConfig;
 
-    private final Task task;
+  public CustomActionStep(CustomActionConfig customActionConfig) {
+    this.customActionConfig = customActionConfig;
+  }
 
-    public CustomActionStep(CustomActionConfig customActionConfig, Task task) {
-        this.task = task;
-        this.customActionConfig = customActionConfig;
-    }
-
-    @Override
-    public void execute(JdbcDatabaseContainer<?> container) {
-        CustomAction<? super Task,? super JdbcDatabaseContainer<?>> customAction = customActionConfig.getCustomAction();
-        customAction.execute(task, container);
-    }
+  @Override
+  public void execute(ExecutionContext executionContext) {
+    Action<? super ExecutionContext> customAction = customActionConfig.getCustomAction();
+    customAction.execute(executionContext);
+  }
 }

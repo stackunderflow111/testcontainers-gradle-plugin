@@ -1,22 +1,27 @@
 package github.stackunderflow111.extenstion;
 
-import github.stackunderflow111.CustomAction;
-import org.gradle.api.Task;
-import org.testcontainers.containers.JdbcDatabaseContainer;
+import github.stackunderflow111.ExecutionContext;
+import github.stackunderflow111.steps.CustomActionStep;
+import org.gradle.api.Action;
 
 public class CustomActionConfig implements Config {
-    private CustomAction<? super Task,? super JdbcDatabaseContainer<?>> customAction = (task, container) -> {};
+  private Action<? super ExecutionContext> customAction = context -> {};
 
-    public CustomAction<? super Task,? super JdbcDatabaseContainer<?>> getCustomAction() {
-        return customAction;
-    }
+  public Action<? super ExecutionContext> getCustomAction() {
+    return customAction;
+  }
 
-    /**
-     * Run customAction for this step
-     * @param customAction the action to run. It takes two arguments,
-     *                     the first one is the configured task, and the second one is the started container
-     */
-    public void run(CustomAction<? super Task,? super JdbcDatabaseContainer<?>> customAction) {
-        this.customAction = customAction;
-    }
+  /**
+   * Run a custom action for this step
+   *
+   * @param customAction the action to run. It takes the execution context as the argument
+   */
+  public void run(Action<? super ExecutionContext> customAction) {
+    this.customAction = customAction;
+  }
+
+  @Override
+  public CustomActionStep createStep() {
+    return new CustomActionStep(this);
+  }
 }
