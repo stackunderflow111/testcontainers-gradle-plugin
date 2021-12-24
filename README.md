@@ -11,12 +11,12 @@ import org.jooq.meta.jaxb.Configuration
 
 plugins {
     // include my plugin
-    id("github.stackunderflow111.testcontainers") version "1.0"
+    id("io.github.stackunderflow111.testcontainers")
     // include the jooq gradle plugin
     id("nu.studer.jooq") version "6.0.1"
 }
 
-group = "github.stackunderflow111"
+group = "io.github.stackunderflow111"
 version = "1.0-SNAPSHOT"
 
 repositories {
