@@ -1,7 +1,7 @@
 package io.github.stackunderflow111;
 
-import io.github.stackunderflow111.extenstion.Config;
 import io.github.stackunderflow111.extenstion.TestcontainersExtension;
+import io.github.stackunderflow111.extenstion.config.Config;
 import io.github.stackunderflow111.steps.Step;
 import io.github.stackunderflow111.utils.ConfigurationUtils;
 import io.github.stackunderflow111.utils.ContainerUtils;
@@ -41,30 +41,15 @@ public class DoFirstAction implements Action<Task> {
   @Override
   public void execute(@NotNull Task task) {
     Project project = task.getProject();
-    ClassLoader classLoader = initClassLoader(project);
-    JdbcDatabaseContainer<?> container = startContainer(extension, project, classLoader);
+    ClassLoader classLoader = createClassLoader(project);
+    JdbcDatabaseContainer<?> container = startContainer(extension, classLoader);
+    registerContainerStopHook(container, project);
     ExecutionContext executionContext = new ExecutionContext(container, task, classLoader);
-    List<Step> postStartSteps = configurePostStartSteps(extension.getConfigs());
-    // run steps
-    for (Step step : postStartSteps) {
-      logger.info("Executing step: {}", step.getClass().getSimpleName());
-      step.execute(executionContext);
-    }
-    logger.info("Steps executed successfully!");
+    List<Step> postStartSteps = createPostStartSteps(extension.getConfigs());
+    runPostStartSteps(postStartSteps, executionContext);
   }
 
-  private static List<Step> configurePostStartSteps(List<Config> configs) {
-    List<Step> postStartSteps =
-        configs.stream().map(Config::createStep).collect(Collectors.toList());
-    logger.info(
-        "Steps to execute: {}",
-        postStartSteps.stream()
-            .map(step -> step.getClass().getSimpleName())
-            .collect(Collectors.toSet()));
-    return postStartSteps;
-  }
-
-  private static ClassLoader initClassLoader(Project project) {
+  private static ClassLoader createClassLoader(Project project) {
     Set<URL> classPaths = new HashSet<>();
     if (JavaProjectUtils.isJavaProject(project)) {
       classPaths.addAll(JavaProjectUtils.getClassPathsFromJavaProject(project));
@@ -77,20 +62,38 @@ public class DoFirstAction implements Action<Task> {
   }
 
   private static JdbcDatabaseContainer<?> startContainer(
-      TestcontainersExtension extension, Project project, ClassLoader classLoader) {
-    Action<? super JdbcDatabaseContainer<?>> configureContainerAction =
-        extension.getConfigureContainerAction();
+      TestcontainersExtension extension, ClassLoader classLoader) {
     String imageName = extension.getImageName().get();
     String containerClass = extension.getContainerClass().get();
     JdbcDatabaseContainer<?> container =
-        ContainerUtils.initContainer(imageName, containerClass, classLoader);
+        ContainerUtils.newContainer(imageName, containerClass, classLoader);
+    Action<? super JdbcDatabaseContainer<?>> configureContainerAction =
+        extension.getConfigureContainerAction();
     configureContainerAction.execute(container);
     logger.info("Starting a container with image '{}'", imageName);
     container.start();
     logger.info("Container started successfully with URL '{}'", container.getJdbcUrl());
-    // register buildFinished hook to stop the container automatically
+    return container;
+  }
+
+  private static void registerContainerStopHook(
+      JdbcDatabaseContainer<?> container, Project project) {
     Runnable containerStopHook = ContainerUtils.getContainerStopHook(container);
     project.getGradle().buildFinished(buildResult -> containerStopHook.run());
-    return container;
+  }
+
+  private static List<Step> createPostStartSteps(List<Config> configs) {
+    return configs.stream().map(Config::createStep).collect(Collectors.toList());
+  }
+
+  private static void runPostStartSteps(List<Step> steps, ExecutionContext executionContext) {
+    logger.info(
+        "Steps to execute: {}",
+        steps.stream().map(step -> step.getClass().getSimpleName()).collect(Collectors.toList()));
+    for (Step step : steps) {
+      logger.info("Executing step: {}", step.getClass().getSimpleName());
+      step.execute(executionContext);
+    }
+    logger.info("Steps executed successfully!");
   }
 }

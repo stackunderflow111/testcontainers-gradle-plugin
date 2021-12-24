@@ -1,7 +1,7 @@
 package io.github.stackunderflow111.steps;
 
 import io.github.stackunderflow111.ExecutionContext;
-import io.github.stackunderflow111.extenstion.FlywayMigrateConfig;
+import io.github.stackunderflow111.extenstion.config.FlywayMigrateConfig;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.gradle.api.Action;

@@ -7,7 +7,7 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public class ContainerUtils {
-  public static JdbcDatabaseContainer<?> initContainer(
+  public static JdbcDatabaseContainer<?> newContainer(
       String imageName, String containerClass, ClassLoader classLoader) {
     Constructor<JdbcDatabaseContainer<?>> constructor =
         getContainerConstructor(containerClass, classLoader);

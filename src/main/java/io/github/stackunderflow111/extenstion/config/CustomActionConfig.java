@@ -1,4 +1,4 @@
-package io.github.stackunderflow111.extenstion;
+package io.github.stackunderflow111.extenstion.config;
 
 import io.github.stackunderflow111.ExecutionContext;
 import io.github.stackunderflow111.steps.CustomActionStep;
