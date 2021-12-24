@@ -1,5 +1,8 @@
 package io.github.stackunderflow111.extenstion;
 
+import io.github.stackunderflow111.extenstion.config.Config;
+import io.github.stackunderflow111.extenstion.config.CustomActionConfig;
+import io.github.stackunderflow111.extenstion.config.FlywayMigrateConfig;
 import java.util.ArrayList;
 import java.util.List;
 import org.gradle.api.Action;
