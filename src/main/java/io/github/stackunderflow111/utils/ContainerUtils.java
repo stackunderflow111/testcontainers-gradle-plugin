@@ -1,4 +1,4 @@
-package github.stackunderflow111.utils;
+package io.github.stackunderflow111.utils;
 
 import java.lang.reflect.Constructor;
 import org.gradle.api.InvalidUserDataException;

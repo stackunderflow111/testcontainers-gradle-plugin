@@ -2,11 +2,11 @@ import nu.studer.gradle.jooq.JooqGenerate
 import org.jooq.meta.jaxb.Configuration
 
 plugins {
-    id("github.stackunderflow111.testcontainers")
+    id("io.github.stackunderflow111.testcontainers")
     id("nu.studer.jooq") version "6.0.1"
 }
 
-group = "github.stackunderflow111"
+group = "io.github.stackunderflow111"
 version = "1.0-SNAPSHOT"
 
 repositories {

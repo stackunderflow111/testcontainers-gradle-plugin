@@ -1,6 +1,6 @@
-package github.stackunderflow111.extenstion;
+package io.github.stackunderflow111.extenstion;
 
-import github.stackunderflow111.steps.Step;
+import io.github.stackunderflow111.steps.Step;
 
 /** Interface for all config classes. */
 public interface Config {

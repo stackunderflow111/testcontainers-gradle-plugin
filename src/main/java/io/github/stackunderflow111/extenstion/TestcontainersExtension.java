@@ -1,4 +1,4 @@
-package github.stackunderflow111.extenstion;
+package io.github.stackunderflow111.extenstion;
 
 import java.util.ArrayList;
 import java.util.List;

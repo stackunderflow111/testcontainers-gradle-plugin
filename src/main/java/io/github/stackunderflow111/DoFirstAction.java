@@ -1,11 +1,11 @@
-package github.stackunderflow111;
+package io.github.stackunderflow111;
 
-import github.stackunderflow111.extenstion.Config;
-import github.stackunderflow111.extenstion.TestcontainersExtension;
-import github.stackunderflow111.steps.Step;
-import github.stackunderflow111.utils.ConfigurationUtils;
-import github.stackunderflow111.utils.ContainerUtils;
-import github.stackunderflow111.utils.JavaProjectUtils;
+import io.github.stackunderflow111.extenstion.Config;
+import io.github.stackunderflow111.extenstion.TestcontainersExtension;
+import io.github.stackunderflow111.steps.Step;
+import io.github.stackunderflow111.utils.ConfigurationUtils;
+import io.github.stackunderflow111.utils.ContainerUtils;
+import io.github.stackunderflow111.utils.JavaProjectUtils;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashSet;

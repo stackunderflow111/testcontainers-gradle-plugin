@@ -1,4 +1,4 @@
-package github.stackunderflow111.utils;
+package io.github.stackunderflow111.utils;
 
 import java.io.File;
 import java.net.MalformedURLException;

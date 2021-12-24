@@ -1,4 +1,4 @@
-package github.stackunderflow111
+package io.github.stackunderflow111
 
 import org.gradle.testkit.runner.GradleRunner
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS

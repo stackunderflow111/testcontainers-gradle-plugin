@@ -1,6 +1,6 @@
-package github.stackunderflow111.extenstion;
+package io.github.stackunderflow111.extenstion;
 
-import github.stackunderflow111.steps.FlywayMigrateStep;
+import io.github.stackunderflow111.steps.FlywayMigrateStep;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.gradle.api.Action;
 

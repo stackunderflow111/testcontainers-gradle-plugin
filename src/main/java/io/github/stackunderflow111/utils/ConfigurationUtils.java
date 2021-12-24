@@ -1,4 +1,4 @@
-package github.stackunderflow111.utils;
+package io.github.stackunderflow111.utils;
 
 import java.net.URL;
 import java.util.HashSet;

@@ -6,7 +6,7 @@ plugins {
     id("com.diffplug.spotless") version "6.0.4"
 }
 
-group = "github.stackunderflow111"
+group = "io.github.stackunderflow111"
 version = "1.0"
 
 repositories {
@@ -24,10 +24,10 @@ dependencies {
 gradlePlugin {
     plugins {
         create("testcontainersPlugin") {
-            id = "github.stackunderflow111.testcontainers"
+            id = "io.github.stackunderflow111.testcontainers"
             displayName = "Testconatiners plugin"
             description = "Configure an existing task to run testcontainers in its doFirst block"
-            implementationClass = "github.stackunderflow111.TestcontainersPlugin"
+            implementationClass = "io.github.stackunderflow111.TestcontainersPlugin"
         }
     }
 }

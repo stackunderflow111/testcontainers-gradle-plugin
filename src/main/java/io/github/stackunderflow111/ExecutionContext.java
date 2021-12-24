@@ -1,4 +1,4 @@
-package github.stackunderflow111;
+package io.github.stackunderflow111;
 
 import org.gradle.api.Task;
 import org.testcontainers.containers.JdbcDatabaseContainer;

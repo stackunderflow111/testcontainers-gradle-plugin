@@ -1,6 +1,6 @@
-package github.stackunderflow111.steps;
+package io.github.stackunderflow111.steps;
 
-import github.stackunderflow111.ExecutionContext;
+import io.github.stackunderflow111.ExecutionContext;
 
 public interface Step {
   /**

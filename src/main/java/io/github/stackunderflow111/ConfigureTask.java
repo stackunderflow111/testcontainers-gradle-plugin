@@ -1,6 +1,6 @@
-package github.stackunderflow111;
+package io.github.stackunderflow111;
 
-import github.stackunderflow111.extenstion.TestcontainersExtension;
+import io.github.stackunderflow111.extenstion.TestcontainersExtension;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;

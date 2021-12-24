@@ -1,7 +1,7 @@
-package github.stackunderflow111;
+package io.github.stackunderflow111;
 
-import github.stackunderflow111.extenstion.TestcontainersExtension;
-import github.stackunderflow111.utils.ConfigurationUtils;
+import io.github.stackunderflow111.extenstion.TestcontainersExtension;
+import io.github.stackunderflow111.utils.ConfigurationUtils;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.jetbrains.annotations.NotNull;
