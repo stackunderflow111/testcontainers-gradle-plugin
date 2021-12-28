@@ -1,6 +1,6 @@
 package io.github.stackunderflow111;
 
-import io.github.stackunderflow111.extenstion.TestcontainersExtension;
+import io.github.stackunderflow111.extension.TestcontainersExtension;
 import io.github.stackunderflow111.utils.ConfigurationUtils;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;

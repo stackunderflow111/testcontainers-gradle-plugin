@@ -1,4 +1,4 @@
-package io.github.stackunderflow111.extenstion.config;
+package io.github.stackunderflow111.extension.config;
 
 import io.github.stackunderflow111.steps.FlywayMigrateStep;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
