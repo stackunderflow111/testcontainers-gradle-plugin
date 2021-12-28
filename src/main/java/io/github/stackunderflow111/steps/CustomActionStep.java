@@ -1,7 +1,7 @@
 package io.github.stackunderflow111.steps;
 
 import io.github.stackunderflow111.ExecutionContext;
-import io.github.stackunderflow111.extenstion.config.CustomActionConfig;
+import io.github.stackunderflow111.extension.config.CustomActionConfig;
 import org.gradle.api.Action;
 
 public class CustomActionStep implements Step {

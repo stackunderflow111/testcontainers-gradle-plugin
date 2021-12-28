@@ -1,7 +1,7 @@
 package io.github.stackunderflow111;
 
-import io.github.stackunderflow111.extenstion.TestcontainersExtension;
-import io.github.stackunderflow111.extenstion.config.Config;
+import io.github.stackunderflow111.extension.TestcontainersExtension;
+import io.github.stackunderflow111.extension.config.Config;
 import io.github.stackunderflow111.steps.Step;
 import io.github.stackunderflow111.utils.ConfigurationUtils;
 import io.github.stackunderflow111.utils.ContainerUtils;
