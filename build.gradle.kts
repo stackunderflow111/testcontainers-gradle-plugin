@@ -3,7 +3,7 @@ plugins {
     id("java-gradle-plugin")
     id("maven-publish")
     id("com.gradle.plugin-publish") version "0.20.0"
-    id("com.diffplug.spotless") version "6.2.0"
+    id("com.diffplug.spotless") version "6.2.1"
 }
 
 group = "io.github.stackunderflow111"
