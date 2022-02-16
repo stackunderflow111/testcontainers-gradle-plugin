@@ -16,7 +16,7 @@ repositories {
 dependencies {
     api("org.testcontainers:jdbc:1.16.3")
     api("org.flywaydb:flyway-core:8.5.0")
-    testImplementation("org.spockframework:spock-core:2.0-groovy-3.0") {
+    testImplementation("org.spockframework:spock-core:2.1-groovy-3.0") {
         exclude(group = "org.codehaus.groovy")
     }
 }
