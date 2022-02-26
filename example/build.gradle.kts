@@ -9,7 +9,7 @@ plugins {
 buildscript {
     repositories { mavenCentral() }
     dependencies {
-        // provides the "org.testcontainers.containers.PostgreSQLContainer" class
+        // provides the "org.testcontainers.containers.PostgreSQLContainer" class for my plugin
         classpath("org.testcontainers:postgresql:1.16.3")
     }
 }
@@ -18,10 +18,15 @@ repositories { mavenCentral() }
 
 // testcontainers configuration block
 testcontainers {
-    // docker image name, required
-    imageName.set("postgres:13-alpine")
-    // testcontainers class used to create the container, required
-    containerClass.set("org.testcontainers.containers.PostgreSQLContainer")
+    databaseContainerBuildServices {
+        // here we create a build service for postgres container with name "postgresContainer"
+        create("postgresContainer") {
+            // docker image name, required
+            imageName.set("postgres:13-alpine")
+            // testcontainers class used to create the container, required
+            containerClass.set("org.testcontainers.containers.PostgreSQLContainer")
+        }
+    }
 }
 
 val buildServiceRegistrations: NamedDomainObjectSet<BuildServiceRegistration<*, *>> =
@@ -30,7 +35,7 @@ val buildServiceRegistrations: NamedDomainObjectSet<BuildServiceRegistration<*, 
 // retrieve the testcontainers build service registered by my plugin
 @Suppress("UNCHECKED_CAST")
 val postgresProvider =
-    buildServiceRegistrations.getByName("testcontainers").service as Provider<DatabaseContainer>
+    buildServiceRegistrations.getByName("postgresContainer").service as Provider<DatabaseContainer>
 
 /** Print out the jdbc URL of the postgres container started by [postgresProvider] build service. */
 abstract class Print : DefaultTask() {
