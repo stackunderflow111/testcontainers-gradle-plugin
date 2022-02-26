@@ -12,10 +12,10 @@ import org.testcontainers.containers.JdbcDatabaseContainer;
 
 public abstract class DatabaseContainer implements BuildService<Params>, AutoCloseable {
 
-    public abstract static class Params implements BuildServiceParameters {
-        public abstract Property<String> getImageName();
+    public interface Params extends BuildServiceParameters {
+        Property<String> getImageName();
 
-        public abstract Property<String> getContainerClass();
+        Property<String> getContainerClass();
     }
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseContainer.class);
