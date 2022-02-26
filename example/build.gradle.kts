@@ -27,6 +27,7 @@ testcontainers {
 val buildServiceRegistrations: NamedDomainObjectSet<BuildServiceRegistration<*, *>> =
     gradle.sharedServices.registrations
 
+// retrieve the testcontainers build service registered by my plugin
 @Suppress("UNCHECKED_CAST")
 val postgresProvider =
     buildServiceRegistrations.getByName("testcontainers").service as Provider<DatabaseContainer>
@@ -43,6 +44,7 @@ abstract class Print : DefaultTask() {
     }
 }
 
+// connect the Print task to the testcontainers build service
 tasks.register<Print>("printDatabaseInformation") {
     container.set(postgresProvider)
     usesService(postgresProvider)
