@@ -3,6 +3,7 @@ package io.github.stackunderflow111.plugins.testcontainers;
 import org.gradle.api.provider.Property;
 
 public abstract class DatabaseContainerConfig {
+    /** The name of the build service to be created. */
     private final String name;
 
     public DatabaseContainerConfig(String name) {
