@@ -16,8 +16,6 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
 }
 
-tasks.withType<Jar> { archiveBaseName.set("testcontainers-plugin") }
-
 gradlePlugin {
     plugins {
         create("testcontainersPlugin") {

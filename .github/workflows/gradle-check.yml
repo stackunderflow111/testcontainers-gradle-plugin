@@ -19,7 +19,7 @@ jobs:
     - name: Set up Gradle
       uses: gradle/gradle-build-action@v2
     - name: Check plugin
-      run: ./gradlew --project-dir plugin-build check
+      run: ./gradlew --project-dir testcontainers-plugin check
     - name: Check example project
       run: ./gradlew printDatabaseInformation spotlessCheck
 

@@ -34,10 +34,13 @@ val buildServiceRegistrations: NamedDomainObjectSet<BuildServiceRegistration<*, 
 
 // retrieve the testcontainers build service registered by my plugin
 @Suppress("UNCHECKED_CAST")
-val postgresProvider =
+val postgresContainerProvider =
     buildServiceRegistrations.getByName("postgresContainer").service as Provider<DatabaseContainer>
 
-/** Print out the jdbc URL of the postgres container started by [postgresProvider] build service. */
+/**
+ * Print out the jdbc URL of the postgres container started by [postgresContainerProvider] build
+ * service.
+ */
 abstract class Print : DefaultTask() {
 
     @get:Internal abstract val container: Property<DatabaseContainer>
@@ -51,8 +54,8 @@ abstract class Print : DefaultTask() {
 
 // connect the Print task to the testcontainers build service
 tasks.register<Print>("printDatabaseInformation") {
-    container.set(postgresProvider)
-    usesService(postgresProvider)
+    container.set(postgresContainerProvider)
+    usesService(postgresContainerProvider)
 }
 
 spotless { kotlinGradle { ktfmt().dropboxStyle() } }
