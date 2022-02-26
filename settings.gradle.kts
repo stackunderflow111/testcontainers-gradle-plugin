@@ -1,4 +1,4 @@
-rootProject.name = "testcontainers-plugin"
+rootProject.name = "testcontainers-gradle-plugin"
 
 include("example")
-includeBuild("plugin-build")
+includeBuild("testcontainers-plugin")
