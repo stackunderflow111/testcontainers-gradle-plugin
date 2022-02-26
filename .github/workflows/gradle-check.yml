@@ -18,6 +18,8 @@ jobs:
         distribution: 'temurin'
     - name: Set up Gradle
       uses: gradle/gradle-build-action@v2
-    - name: Gradle Check
-      run: ./gradlew check
+    - name: Check plugin
+      run: ./gradlew --project-dir plugin-build check
+    - name: Check example project
+      run: ./gradlew printDatabaseInformation spotlessCheck
 
