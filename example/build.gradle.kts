@@ -16,30 +16,18 @@ buildscript {
 
 repositories { mavenCentral() }
 
-// testcontainers configuration block
-testcontainers {
-    databaseContainerBuildServices {
-        // here we create a build service for postgres container with name "postgresContainer"
-        create("postgresContainer") {
+val postgresContainer =
+    gradle.sharedServices.registerIfAbsent("postgresContainer", DatabaseContainer::class) {
+        parameters {
             // docker image name, required
             imageName.set("postgres:13-alpine")
             // testcontainers class used to create the container, required
             containerClass.set("org.testcontainers.containers.PostgreSQLContainer")
         }
     }
-}
-
-val buildServiceRegistrations: NamedDomainObjectSet<BuildServiceRegistration<*, *>> =
-    gradle.sharedServices.registrations
-
-// retrieve the testcontainers build service registered by my plugin
-@Suppress("UNCHECKED_CAST")
-val postgresContainerProvider =
-    buildServiceRegistrations.getByName("postgresContainer").service as Provider<DatabaseContainer>
 
 /**
- * Print out the jdbc URL of the postgres container started by [postgresContainerProvider] build
- * service.
+ * Print out the jdbc URL of the postgres container started by [postgresContainer] build service.
  */
 abstract class Print : DefaultTask() {
 
@@ -54,8 +42,8 @@ abstract class Print : DefaultTask() {
 
 // connect the Print task to the testcontainers build service
 tasks.register<Print>("printDatabaseInformation") {
-    container.set(postgresContainerProvider)
-    usesService(postgresContainerProvider)
+    container.set(postgresContainer)
+    usesService(postgresContainer)
 }
 
 spotless { kotlinGradle { ktfmt().dropboxStyle() } }

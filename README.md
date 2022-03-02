@@ -6,4 +6,36 @@ with build-time code generation tools like [gradle-jooq-plugin](https://github.c
 
 ## Usage example
 
-See an example in the [example/build.gradle.kts](example/build.gradle.kts) file.
+### Basic example
+
+```kotlin
+plugins {
+    // include my plugin
+    id("io.github.stackunderflow111.testcontainers") version "<latest version>"
+}
+
+buildscript {
+    repositories { mavenCentral() }
+    dependencies {
+        // provides the "org.testcontainers.containers.PostgreSQLContainer" class for my plugin
+        classpath("org.testcontainers:postgresql:1.16.3")
+    }
+}
+
+val postgresContainer =
+    gradle.sharedServices.registerIfAbsent("postgresContainer", DatabaseContainer::class) {
+        parameters {
+            // docker image name, required
+            imageName.set("postgres:13-alpine")
+            // testcontainers class used to create the container, required
+            containerClass.set("org.testcontainers.containers.PostgreSQLContainer")
+        }
+    }
+
+```
+
+### Full examples
+
+You can see an example in the [example/build.gradle.kts](example/build.gradle.kts) file. The 
+[jooq-flyway-testcontainers-demo](https://github.com/stackunderflow111/jooq-flyway-testcontainers-demo) project
+is an example integrating this plugin with flyway and Jooq.
