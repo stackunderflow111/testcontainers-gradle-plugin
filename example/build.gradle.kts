@@ -3,7 +3,7 @@ import io.github.stackunderflow111.plugins.testcontainers.DatabaseContainer
 plugins {
     // include my plugin
     id("io.github.stackunderflow111.testcontainers")
-    id("com.diffplug.spotless") version "6.3.0"
+    id("com.diffplug.spotless") version "6.4.0"
 }
 
 buildscript {
