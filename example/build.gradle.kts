@@ -10,7 +10,7 @@ buildscript {
     repositories { mavenCentral() }
     dependencies {
         // provides the "org.testcontainers.containers.PostgreSQLContainer" class for my plugin
-        classpath("org.testcontainers:postgresql:1.16.3")
+        classpath("org.testcontainers:postgresql:1.17.1")
     }
 }
 
