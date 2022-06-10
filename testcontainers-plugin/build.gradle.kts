@@ -12,7 +12,7 @@ version = project.findProperty("version") ?: "0.1.0-SNAPSHOT"
 repositories { mavenCentral() }
 
 dependencies {
-    implementation("org.testcontainers:jdbc:1.17.1")
+    implementation("org.testcontainers:jdbc:1.17.2")
     implementation("org.apache.commons:commons-lang3:3.12.0")
 }
 
