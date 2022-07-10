@@ -3,14 +3,14 @@ import io.github.stackunderflow111.plugins.testcontainers.DatabaseContainer
 plugins {
     // include my plugin
     id("io.github.stackunderflow111.testcontainers")
-    id("com.diffplug.spotless") version "6.7.0"
+    id("com.diffplug.spotless") version "6.8.0"
 }
 
 buildscript {
     repositories { mavenCentral() }
     dependencies {
         // provides the "org.testcontainers.containers.PostgreSQLContainer" class for my plugin
-        classpath("org.testcontainers:postgresql:1.17.2")
+        classpath("org.testcontainers:postgresql:1.17.3")
     }
 }
 
