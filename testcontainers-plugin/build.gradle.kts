@@ -1,5 +1,6 @@
 plugins {
     id("java-gradle-plugin")
+    kotlin("jvm") version "1.6.10"
     id("maven-publish")
     id("com.gradle.plugin-publish") version "1.0.0"
     id("com.diffplug.spotless") version "6.8.0"
@@ -35,6 +36,6 @@ pluginBundle {
 }
 
 spotless {
-    java { googleJavaFormat().aosp() }
     kotlinGradle { ktfmt().dropboxStyle() }
+    kotlin { ktfmt() }
 }

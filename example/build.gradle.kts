@@ -1,4 +1,4 @@
-import io.github.stackunderflow111.plugins.testcontainers.DatabaseContainer
+import io.github.stackunderflow111.plugins.testcontainers.DatabaseContainerBuildService
 
 plugins {
     // include my plugin
@@ -17,7 +17,8 @@ buildscript {
 repositories { mavenCentral() }
 
 val postgresContainer =
-    gradle.sharedServices.registerIfAbsent("postgresContainer", DatabaseContainer::class) {
+    gradle.sharedServices.registerIfAbsent(
+        "postgresContainer", DatabaseContainerBuildService::class) {
         parameters {
             // docker image name, required
             imageName.set("postgres:13-alpine")
@@ -31,7 +32,7 @@ val postgresContainer =
  */
 abstract class Print : DefaultTask() {
 
-    @get:Internal abstract val container: Property<DatabaseContainer>
+    @get:Internal abstract val container: Property<DatabaseContainerBuildService>
 
     @TaskAction
     fun print() {
