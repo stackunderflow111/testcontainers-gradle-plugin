@@ -17,7 +17,8 @@ buildscript {
 repositories { mavenCentral() }
 
 val postgresContainer =
-    gradle.sharedServices.registerIfAbsent("postgresContainer", DatabaseContainerBuildService::class) {
+    gradle.sharedServices.registerIfAbsent(
+        "postgresContainer", DatabaseContainerBuildService::class) {
         parameters {
             // docker image name, required
             imageName.set("postgres:13-alpine")
