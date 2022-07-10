@@ -1,6 +1,6 @@
 package io.github.stackunderflow111.plugins.testcontainers;
 
-import io.github.stackunderflow111.plugins.testcontainers.DatabaseContainer.Params;
+import io.github.stackunderflow111.plugins.testcontainers.DatabaseContainerBuildService.Params;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.gradle.api.InvalidUserDataException;
 import org.gradle.api.provider.Property;
@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.JdbcDatabaseContainer;
 
-public abstract class DatabaseContainer implements BuildService<Params>, AutoCloseable {
+public abstract class DatabaseContainerBuildService implements BuildService<Params>, AutoCloseable {
 
     public interface Params extends BuildServiceParameters {
         Property<String> getImageName();
@@ -18,10 +18,10 @@ public abstract class DatabaseContainer implements BuildService<Params>, AutoClo
         Property<String> getContainerClass();
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(DatabaseContainer.class);
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseContainerBuildService.class);
     private final JdbcDatabaseContainer<?> databaseContainer;
 
-    public DatabaseContainer() {
+    public DatabaseContainerBuildService() {
         Params params = getParameters();
         String imageName = params.getImageName().get();
         String containerClassName = params.getContainerClass().get();
