@@ -36,7 +36,6 @@ pluginBundle {
 }
 
 spotless {
-    java { googleJavaFormat().aosp() }
     kotlinGradle { ktfmt().dropboxStyle() }
     kotlin { ktfmt() }
 }
